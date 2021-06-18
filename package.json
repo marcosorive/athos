@@ -1,0 +1,23 @@
+{
+  "name": "athos",
+  "version": "1.0.0",
+  "description": "Athos is a small distributed system that checks prices in different stores and notifies you via telegram.",
+  "main": "index.js",
+  "scripts": {
+    "setup": "cd bot && npm i && cd ../product-management && npm i",
+    "start": "",
+    "run:bot": "npm start --prefix bot",
+    "run:pm": "npm start --prefix product-management"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcosorive/athos.git"
+  },
+  "author": "Marcos Orive Izarra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcosorive/athos/issues"
+  },
+  "homepage": "https://github.com/marcosorive/athos#readme",
+  "dependencies": {}
+}

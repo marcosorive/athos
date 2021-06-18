@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_tienda_tiendas",
+  "info": {
+    "name": "store",
+    "icon": "ad",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "current_price": {
+      "type": "decimal"
+    },
+    "minimum_price": {
+      "type": "decimal"
+    }
+  }
+}

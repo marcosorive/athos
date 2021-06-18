@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "productos",
+  "info": {
+    "name": "Producto",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "stores": {
+      "type": "component",
+      "repeatable": true,
+      "component": "tienda.tienda"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "absolute_minimum": {
+      "type": "decimal"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}
