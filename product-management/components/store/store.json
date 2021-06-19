@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_store_stores",
+  "info": {
+    "name": "store",
+    "icon": "ad",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "url": {
+      "type": "string"
+    },
+    "currentPrice": {
+      "type": "decimal"
+    },
+    "minimumPrice": {
+      "type": "decimal",
+      "default": 99999999999
+    },
+    "name": {
+      "type": "enumeration",
+      "enum": [
+        "Amazon",
+        "Fnac",
+        "Game",
+        "ElCorteIngles",
+        "MediaMarkt",
+        "PcComponentes"
+      ]
+    }
+  }
+}

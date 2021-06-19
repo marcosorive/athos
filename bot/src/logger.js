@@ -1,4 +1,4 @@
 const pino = require('pino')
 module.exports = {
-  logger: pino(pino.destination("./bot.log"))
+  logger: pino({prettyPrint: { colorize: false, translateTime: true}},pino.destination("./bot.log"), )
 }

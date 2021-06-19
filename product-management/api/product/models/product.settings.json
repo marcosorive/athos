@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "name": "product",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "absoluteMinimum": {
+      "type": "decimal",
+      "default": 99999999999999
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "stores": {
+      "type": "dynamiczone",
+      "components": [
+        "store.store"
+      ]
+    }
+  }
+}

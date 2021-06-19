@@ -4,9 +4,14 @@ Athos is a small distributed system that periodically checks product prices and 
 
 # About ❓
 - This system is developed with the idea of being used in a raspberry pi, but it can be deployed in any cloud environment, of course.
+
+## Bot
 - Usually telegram bots are accessible by everyone using the app. The bot part of Athos is built to be different. The reason is simple: web scrapping is hard and you have to be considerate with the website. If I allow any user to add products to be tracked, it would almost look like I'm DDosing the stores to get the prices.
 - For this reason, the bot is meant to only be used by a small amount of people. That's why it uses an authentication mechanism.
 - You can easily create your own telegram bot and deploy your own Athos. 
+
+## Product management
+- The product management part is a simple Strapi instance that has products
 
 # Requirements 🛠
 - Node.js 12 or greater.

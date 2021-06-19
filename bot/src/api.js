@@ -6,8 +6,8 @@ const baseUrl = process.env.PRODUCT_MANAGEMENT_BASE_URL
 
 const paths = {
   loginPath: '/auth/local',
-  enabledProducts: '/productos?enabled=true',
-  updateProduct: '/productos/:id'
+  enabledProducts: '/products?enabled=true',
+  updateProduct: '/products/:id'
 }
 
 async function authenticateAndSaveJwt () {

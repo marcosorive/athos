@@ -1,7 +1,7 @@
 'use strict'
 
 async function getPrice (puppeteerBrowser, store) {
-  const { url, current_price: currentPrice } = store
+  const { url, currentPrice: currentPrice } = store
   const transformedUrl = new URL(url)
   const domain = transformedUrl.host.replace('www.', '')
   switch (domain) {
