@@ -1,5 +1,5 @@
 const { logger } = require('./logger')
-const { getAllChatIds } = require('./user')
+const { getAllChatIds } = require('./persistance/User')
 const { getEnabledProducts, updateProduct } = require('./api')
 const { getPrice } = require('./scrapper')
 
@@ -13,11 +13,11 @@ function getStoreWithUpdatedPrice(_browser, product, store, delayTime, bot) {
                 newCurrent = parseFloat(newCurrent)
                 logger.info(`-> Price is ${newCurrent}`)
                 newStore.currentPrice = newCurrent
-                if (newCurrent < parseFloat(store.minimumPrice)) {
+                if (!store.minimumPrice || newCurrent < parseFloat(store.minimumPrice)) {
                     newStore.minimumPrice = newCurrent
                     const chatIds = await getAllChatIds()
-                    chatIds.forEach(id => bot.telegram.sendMessage(id,
-                        `${product.name} has a new lowest in ${store.name}.\nNOW: ${newCurrent} (was ${store.minimumPrice})\n${store.url}`))
+                    const message = `${product.name} has a new lowest in ${store.name}.\nNOW: ${newCurrent} (was ${store.minimumPrice})\n${store.url}`;
+                    chatIds.forEach(id => bot.telegram.sendMessage(id, message));
                 }
                 resolve(newStore)
             } catch (error) {
@@ -35,23 +35,28 @@ async function updatePrices(_browser, bot) {
         return await Promise.all(enabledProducts.map(async (product, productIndex) => {
             setTimeout(() => logger.info(`-> Checking product with name ${product.name}. Absolute minimum is ${product.absoluteMinimum}`), productIndex * 10000);
             const newProduct = { ...product };
+            if (!newProduct.absoluteMinimum) {
+                newProduct.absoluteMinimum = 999999999999;
+            }
             const newStores = await Promise.all(product.stores.map(async (store, storeIndex) => {
-                const delayTime = (productIndex * 10000) + (storeIndex * 5000)
+                const delayTime = (productIndex * 20000) + (storeIndex * 5000)
                 return getStoreWithUpdatedPrice(_browser, product, store, delayTime, bot)
             }));
             newProduct.stores = newStores
-            let storeIsLowest = null
+            let storeIsLowest = undefined;
             newStores.forEach((s) => {
                 if (s.currentPrice < newProduct.absoluteMinimum) {
                     newProduct.absoluteMinimum = s.currentPrice
                     storeIsLowest = s;
                 }
-            })
+            });
             if (storeIsLowest) {
-                logger.info('-> Found lowest ever, notifying user.')
+                logger.info(`-> Found lowest ever, notifying user. ${product.name} in store ${storeIsLowest.name} and price ${storeIsLowest.currentPrice}`);
                 const chatIds = await getAllChatIds()
-                chatIds.forEach(id => bot.telegram.sendMessage(id,
-                    `${product.name} has a new LOWEST EVER!.\nNOW: ${storeIsLowest.currentPrice} (was: ${product.absoluteMinimum})\nURL : ${storeIsLowest.url}`))
+                const message = `${product.name} has a new LOWEST EVER!.\nNOW: ${storeIsLowest.currentPrice} (was: ${product.absoluteMinimum})\nURL : ${storeIsLowest.url}`
+                chatIds.forEach(id => bot.telegram.sendMessage(id, message))
+            } else {
+                logger.info(`-> ${product.name} has no lowest ever, nothing to do! `)
             }
             return await updateProduct(newProduct)
         }))

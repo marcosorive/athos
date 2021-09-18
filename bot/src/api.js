@@ -10,9 +10,9 @@ const paths = {
   updateProduct: '/products/:id'
 }
 
-async function authenticateAndSaveJwt () {
+async function authenticateAndSaveJwt() {
   try {
-    logger.info('-> Authenticating....')
+    logger.info(`Authenticating with url ${baseUrl} ...`)
     const loginUrl = `${baseUrl}${paths.loginPath}`
     const body = {
       identifier: process.env.PRODUCT_MANAGEMENT_EMAIL,
@@ -33,21 +33,21 @@ async function authenticateAndSaveJwt () {
   }
 }
 
-async function getEnabledProducts () {
+async function getEnabledProducts() {
   try {
     const enabledProductsUrl = `${baseUrl}${paths.enabledProducts}`
     const headers = {
       Authorization: `Bearer ${process.env.PRODUCT_MANAGEMENT_JWT}`,
       'Content-Type': 'application/json'
     }
-    const response = await fetch(enabledProductsUrl, {headers})
+    const response = await fetch(enabledProductsUrl, { headers })
     return await response.json()
   } catch (e) {
     logger.error(e)
   }
 }
 
-async function updateProduct (product) {
+async function updateProduct(product) {
   try {
     const updateUrl = `${baseUrl}${paths.updateProduct}`.replace(':id', product.id)
     logger.info(`Updating product ${product.name}. URL is ${updateUrl}`)
